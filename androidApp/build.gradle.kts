@@ -1,14 +1,14 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    id(androidApp)
+    kotlin(androidPlugin)
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Versions.compile_sdk
     defaultConfig {
         applicationId = "me.naingaungluu.kmmpractice.android"
-        minSdk = 23
-        targetSdk = 32
+        minSdk = Versions.min_sdk
+        targetSdk = Versions.target_sdk
         versionCode = 1
         versionName = "1.0"
     }
@@ -17,11 +17,40 @@ android {
             isMinifyEnabled = false
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.compose_compiler_version
+    }
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+
+    with(Dependencies) {
+        implementation(napier)
+        implementation(material)
+    }
+
+    // Compose
+    with(Dependencies.Compose) {
+        implementation(compiler)
+        implementation(runtime)
+        implementation(runtime_livedata)
+        implementation(ui)
+        implementation(tooling)
+        implementation(foundation)
+        implementation(foundationLayout)
+        implementation(material)
+        implementation(material_icons)
+        implementation(activity)
+    }
 }
