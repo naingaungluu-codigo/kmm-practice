@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    kotlin(multiplatform)
+    id(androidLib)
+    kotlin(cocoapods)
 }
 
 version = "1.0"
@@ -23,7 +23,12 @@ kotlin {
     }
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Dependencies.JetBrains.datetime)
+                implementation(Dependencies.napier)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -53,10 +58,10 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = Versions.compile_sdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
-        targetSdk = 32
+        minSdk = Versions.min_sdk
+        targetSdk = Versions.target_sdk
     }
 }

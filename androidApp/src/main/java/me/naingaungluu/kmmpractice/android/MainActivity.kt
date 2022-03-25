@@ -1,20 +1,33 @@
 package me.naingaungluu.kmmpractice.android
 
 import android.os.Bundle
-import android.widget.TextView
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import me.naingaungluu.kmmpractice.Greeting
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
+import me.naingaungluu.kmmpractice.android.ui.MainView
 
 fun greet(): String {
-    return Greeting().greeting()
+    return "Hello"
 }
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val tv: TextView = findViewById(R.id.text_view)
-        tv.text = greet()
+        Napier.base(DebugAntilog())
+        setContent {
+            MainView {
+                TopAppBar(
+                    title = {
+                        when (it) {
+                            0 -> Text(text = "World Clocks")
+                            else -> Text(text = "Find Meeting")
+                        }
+                    }
+                )
+            }
+        }
     }
 }
